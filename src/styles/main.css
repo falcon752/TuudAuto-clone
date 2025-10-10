@@ -78,7 +78,7 @@ font-family: Carme, sans-serif;
   border: none;
   outline: none;
   padding: 10px 16px;
-  width: 460px;
+  width: 600px;
   background: transparent;
   font-size: 14px;
 }
@@ -161,7 +161,7 @@ font-family: Carme, sans-serif;
 }
 
 .top-links {
-  background: #3b0d35;
+  background: #270131;
   color: #ffffff;
 }
 
@@ -200,8 +200,9 @@ font-family: Carme, sans-serif;
 }
 
 .top-links li:hover {
-  color: #a14dc7;
+  color: #ffffff;
   transform: scale(1.05);
+  background-color: #593b61;
 }
 
 .nav-icon {
@@ -211,7 +212,7 @@ font-family: Carme, sans-serif;
 }
 
 .top-links li:hover .nav-icon {
-  color: #a14dc7;
+  color: #fbfbfb;
   transform: scale(1.1);
 }
 
@@ -283,20 +284,21 @@ font-family: Carme, sans-serif;
   padding: 64px 0 80px;
   color: #ffffff;
   overflow: visible;
-  min-height: 640px;
+  min-height: 800px;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    180deg,
-    rgba(58, 12, 44, 0.75) 0%,
-    rgba(39, 8, 35, 0.78) 100%
+    90deg,
+    #36083b8c 0%,
+    rgba(90, 0, 102, 0.75) 100%
   );
   pointer-events: none;
   z-index: 0;
 }
+
 
 .hero-inner {
   position: relative;
