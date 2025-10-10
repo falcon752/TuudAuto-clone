@@ -1,5 +1,17 @@
 import React from "react";
-import { FaSearch, FaPhoneAlt } from "react-icons/fa";
+
+import {
+  FaSearch,
+  FaPhoneAlt,
+  FaHome,
+  FaCar,
+  FaHandshake,
+  FaTag,
+  FaHistory,
+  FaCalculator,
+  FaTruck,
+  FaHeadset,
+} from "react-icons/fa";
 
 const NavBar: React.FC = () => {
   return (
@@ -32,28 +44,47 @@ const NavBar: React.FC = () => {
             </div>
           </div>
 
-          <button className="sign-in">
-            Sign In
-          </button>
+          <button className="sign-in">Sign In</button>
         </nav>
       </div>
 
       <nav className="top-links">
         <div className="container links-inner">
           <ul>
-            <li className="active">Home</li>
-            <li>New Cars</li>
-            <li>Used Cars</li>
-            <li>Car Sourcing</li>
-            <li>Sell Your Car</li>
-            <li>Car History</li>
-            <li>Value Your Car</li>
-            <li>Transport Car</li>
-            <li>Pricing</li>
-            <li>Support</li>
+            <li className="active">
+              <FaHome className="nav-icon" /> Home
+            </li>
+            <li>
+              <FaCar className="nav-icon" /> New Cars
+            </li>
+            <li>
+              <FaCar className="nav-icon" /> Used Cars
+            </li>
+            <li>
+              <FaHandshake className="nav-icon" /> Car Sourcing
+            </li>
+            <li>
+              <FaTag className="nav-icon" /> Sell Your Car
+            </li>
+            <li>
+              <FaHistory className="nav-icon" /> Car History
+            </li>
+            <li>
+              <FaCalculator className="nav-icon" /> Value Your Car
+            </li>
+            <li>
+              <FaTruck className="nav-icon" /> Transport Car
+            </li>
+            <li>
+              <FaCalculator className="nav-icon" /> Pricing
+            </li>
+            <li>
+              <FaHeadset className="nav-icon" /> Support
+            </li>
           </ul>
         </div>
       </nav>
+      
     </header>
   );
 };
