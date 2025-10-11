@@ -1,5 +1,6 @@
 import React from "react";
 import heroBg from "../assets/images/hero-bg.jpg";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaClock,
   FaLock,
@@ -10,28 +11,58 @@ import {
   FaUserCheck,
   FaPhoneAlt,
   FaMapMarkerAlt,
-  FaQuoteRight,
   FaArrowRight,
   FaStar,
   FaCheckCircle,
 } from "react-icons/fa";
 
+const heroSubItems = [
+  "Trusted Nationwide Delivery",
+  "Professional Auto Transport",
+  "Premium Vehicle Logistics",
+  "#1 Car Transport Service",
+];
+
 const Hero: React.FC = () => {
+  const [index, setIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % heroSubItems.length);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="hero" style={{ backgroundImage: `url(${heroBg})` }}>
       <div className="hero-overlay" />
 
       <div className="container hero-inner">
-
         <div className="hero-left">
-          <div className="badge">Trusted Car Transport Service</div>
+          <div className="badge">
+            <FaShieldAlt className="badge-icon" />
+            Trusted Car Transport Service
+          </div>
 
           <h1 className="hero-title">
             <span className="line1">We Drive,</span>
             <span className="line2">You Relax</span>
           </h1>
 
-          <h3 className="hero-sub">Trusted Nationwide Delivery</h3>
+          <div style={{ height: "100px", overflow: "hidden" }}>
+            <AnimatePresence>
+              <motion.h3
+                key={heroSubItems[index]}
+                className="hero-sub"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.7 }}
+              >
+                {heroSubItems[index]}
+              </motion.h3>
+            </AnimatePresence>
+          </div>
 
           <p className="hero-desc">
             Professional car shipping services with verified drivers. Safe,
@@ -40,22 +71,26 @@ const Hero: React.FC = () => {
 
           <ul className="features-grid">
             <li>
-              <FaCheckCircle className="feature-icon" /> Fully Insured Transport
+              <FaCheckCircle className="feature-icon green-check" />
+              Fully Insured Transport
             </li>
             <li>
-              <FaCheckCircle className="feature-icon" /> Professional Drivers
+              <FaCheckCircle className="feature-icon green-check" />
+              Professional Drivers
             </li>
             <li>
-              <FaCheckCircle className="feature-icon" /> Real-time GPS Tracking
+              <FaCheckCircle className="feature-icon green-check" />
+              Real-time GPS Tracking
             </li>
             <li>
-              <FaCheckCircle className="feature-icon" /> Door-to-Door Service
+              <FaCheckCircle className="feature-icon green-check" />
+              Door-to-Door Service
             </li>
           </ul>
 
           <div className="hero-cta">
             <button className="btn primary">
-              <FaQuoteRight className="btn-icon" /> Get Free Quote
+              <FaPhoneAlt className="btn-icon" /> Get Free Quote
             </button>
             <button className="btn ghost">
               Learn More <FaArrowRight className="btn-icon" />
@@ -63,13 +98,16 @@ const Hero: React.FC = () => {
           </div>
 
           <div className="support-row">
-            <FaPhoneAlt className="icon" /> 24/7 Support
-            <span> | </span>
-            <FaMapMarkerAlt className="icon" /> Nationwide Service
+            <FaPhoneAlt className="icon" style={{ color: "#28a745" }} /> 24/7
+            Support
+            <FaMapMarkerAlt
+              className="icon"
+              style={{ color: "#007bff" }}
+            />{" "}
+            Nationwide Service
           </div>
         </div>
 
-        {/* RIGHT CARD */}
         <aside className="hero-card">
           <h4>Why Choose TuudAuto?</h4>
           <div className="rating">
