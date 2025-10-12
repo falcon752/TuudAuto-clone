@@ -1,6 +1,7 @@
 import "./styles/main.css";
 import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
+import Services from "./components/Services";
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <NavBar />
       <main>
         <Hero />
+        <Services />
       </main>
     </div>
   );

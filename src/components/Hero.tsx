@@ -3,12 +3,9 @@ import heroBg from "../assets/images/hero-bg.jpg";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaClock,
-  FaLock,
   FaTruck,
-  FaSmile,
+  FaUserFriends,
   FaShieldAlt,
-  FaSatelliteDish,
-  FaUserCheck,
   FaPhoneAlt,
   FaMapMarkerAlt,
   FaArrowRight,
@@ -132,7 +129,7 @@ const Hero: React.FC = () => {
 
             <div className="kpi">
               <div className="kpi-icon">
-                <FaLock />
+                <FaShieldAlt />
               </div>
               <div className="kpi-text">
                 <div className="kpi-number">98%</div>
@@ -152,7 +149,7 @@ const Hero: React.FC = () => {
 
             <div className="kpi">
               <div className="kpi-icon">
-                <FaSmile />
+                <FaUserFriends />
               </div>
               <div className="kpi-text">
                 <div className="kpi-number">5,000+</div>
@@ -168,10 +165,10 @@ const Hero: React.FC = () => {
               <FaShieldAlt /> Fully Insured
             </div>
             <div className="ci">
-              <FaSatelliteDish /> GPS Tracked
+              <FaTruck /> GPS Tracked
             </div>
             <div className="ci">
-              <FaUserCheck /> Verified Drivers
+              <FaUserFriends /> Verified Drivers
             </div>
           </div>
         </aside>
