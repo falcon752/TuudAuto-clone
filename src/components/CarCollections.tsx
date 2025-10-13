@@ -7,7 +7,19 @@ import car4 from "../assets/images/car-4.png";
 import car5 from "../assets/images/car-5.png";
 import carBg from "../assets/images/car-bg.jpg";
 
-const cars = [
+interface Car {
+  id: number;
+  name: string;
+  year: number;
+  type: string;
+  category: string;
+  seats: number;
+  doors: number;
+  price: string;
+  img: string;
+}
+
+const cars: Car[] = [
   {
     id: 1,
     name: "Audi A3 Saloon",
@@ -66,12 +78,25 @@ const cars = [
 ];
 
 export default function CarCollections() {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState<number>(0);
 
-  const nextSlide = () =>
-    setCurrent((prev) => (prev === cars.length - 1 ? 0 : prev + 1));
-  const prevSlide = () =>
-    setCurrent((prev) => (prev === 0 ? cars.length - 1 : prev - 1));
+  const nextSlide = () => {
+    setCurrent((prev) => (prev + 1) % cars.length);
+  };
+
+  const prevSlide = () => {
+    setCurrent((prev) => (prev - 1 + cars.length) % cars.length);
+  };
+
+  const getVisibleSlides = (): Car[] => {
+    const visible: Car[] = [];
+    for (let i = 0; i < 4; i++) {
+      visible.push(cars[(current + i) % cars.length]);
+    }
+    return visible;
+  };
+
+  const visibleCars = getVisibleSlides();
 
   return (
     <section
@@ -90,48 +115,22 @@ export default function CarCollections() {
             ❮
           </button>
 
-          <div className="slides-wrapper">
-            {cars.map((car, index) => {
-              let className = "slide";
-
-              const lastIndex = cars.length - 1;
-              const prev = current === 0 ? lastIndex : current - 1;
-              const next = current === lastIndex ? 0 : current + 1;
-              const farPrev =
-                current === 0
-                  ? lastIndex - 1
-                  : current - 2 < 0
-                  ? lastIndex
-                  : current - 2;
-              const farNext =
-                current === lastIndex
-                  ? 1
-                  : current + 2 > lastIndex
-                  ? 0
-                  : current + 2;
-
-              if (index === current) className += " active";
-              else if (index === prev) className += " prev";
-              else if (index === next) className += " next";
-              else if (index === farPrev) className += " far-prev";
-              else if (index === farNext) className += " far-next";
-
-              return (
-                <div key={car.id} className={className}>
-                  <img src={car.img} alt={car.name} />
-                  <div className="slide-content">
-                    <h3>{car.name}</h3>
-                    <p className="year">{car.year}</p>
-                    <div className="details">
-                      <span>{car.type}</span> • <span>{car.category}</span> •{" "}
-                      <span>{car.seats} Seats</span>
-                    </div>
-                    <p className="price">Starting from {car.price}</p>
-                    <button className="view-btn">View Details</button>
+          <div className="slides-container">
+            {visibleCars.map((car) => (
+              <div key={car.id} className="slide">
+                <img src={car.img} alt={car.name} />
+                <div className="slide-content">
+                  <h3>{car.name}</h3>
+                  <p className="year">{car.year}</p>
+                  <div className="details">
+                    <span>{car.type}</span> • <span>{car.category}</span> •{" "}
+                    <span>{car.seats} Seats</span>
                   </div>
+                  <p className="price">Starting from {car.price}</p>
+                  <button className="view-btn">View Details</button>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
           <button className="nav-btn next" onClick={nextSlide}>
