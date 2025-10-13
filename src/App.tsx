@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import Services from "./components/Services";
 import BookingSteps from "./components/BookingSteps";
 import CarCollections from "./components/CarCollections";
+import WhyChooseTuudAuto from "./components/WhyChooseTuudAuto";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Services />
         <BookingSteps />
         <CarCollections />
+        <WhyChooseTuudAuto />
       </main>
     </div>
   );

@@ -2,8 +2,7 @@
    ====== GLOBAL STYLES ======
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Carme&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Carme&display=swap");
 
 html,
 body,
@@ -13,7 +12,7 @@ body,
 
 body {
   margin: 0;
-  font-family: 'Carme', sans-serif;
+  font-family: "Carme", sans-serif;
   background: #0b0710;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
@@ -876,7 +875,14 @@ body {
 .car-header {
   width: 100%;
   padding: 60px 20px;
-  background: linear-gradient(135deg, #e202ff, #9e00f7, #5301ee, #9e00f7, #e202ff);
+  background: linear-gradient(
+    135deg,
+    #e202ff,
+    #9e00f7,
+    #5301ee,
+    #9e00f7,
+    #e202ff
+  );
   color: #fff;
   text-align: center;
 }
@@ -964,7 +970,6 @@ body {
 .discover-btn:hover {
   transform: scale(1.05);
 }
-
 
 .car-slider {
   flex: 2;
@@ -1072,7 +1077,131 @@ body {
   right: 10px;
 }
 
+/* =====================================================
+   ====== WHY CHOOSE TUUD AUTO STYLES ======
+   ===================================================== */
+.why-section {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #8201a4, #2a0134);
+  color: #fff;
+}
 
+.why-header h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.why-header p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 50px auto;
+}
+
+/* Wrapper to align both grids vertically */
+.why-grids-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* Feature Grid */
+.why-features-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.why-feature-card {
+  background: #ffffff;
+  color: #1a0f2e;
+  padding: 20px 1px;
+  border-radius: 13px;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.why-feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.why-feature-icon {
+  margin-bottom: -25px;
+  color: #1a0f2e;
+}
+
+.why-feature-card h3 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: -7px;
+}
+
+.why-feature-card p {
+  font-size: 16px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+/* Stats Grid */
+.why-stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.why-stat-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #1a0f2e;
+  border-radius: 13px;
+  flex: 1 1 22%;
+  width: 340px;
+  padding: 15px 20px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.why-stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.why-stat-icon {
+  background: #1a0f2e;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.why-stat-content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+}
+
+.why-stat-content p {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.85;
+}
 
 /* =====================================================
    ====== RESPONSIVE STYLES ======
