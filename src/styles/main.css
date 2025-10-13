@@ -2,6 +2,9 @@
    ====== GLOBAL STYLES ======
    ===================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Carme&display=swap');
+
+
 html,
 body,
 #root {
@@ -10,7 +13,7 @@ body,
 
 body {
   margin: 0;
-  font-family: Carme, sans-serif;
+  font-family: 'Carme', sans-serif;
   background: #0b0710;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
@@ -895,7 +898,7 @@ body {
   background-size: cover;
   background-position: center;
   color: #fff;
-  height: 900px;
+  height: 700px; /* reduced height */
   overflow: hidden;
   display: flex;
   align-items: stretch;
@@ -922,33 +925,46 @@ body {
   padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   position: relative;
   z-index: 2;
   border-radius: 0;
+  margin-top: 10px;
+}
+
+.car-left h2 {
+  font-size: 46px;
+  font-weight: 700;
+  margin-bottom: -11px;
 }
 
 .car-left p {
-  font-size: 18px;
-  opacity: 0.9;
-  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.95;
+  margin-bottom: 25px;
 }
 
 .discover-btn {
-  background: #fff;
-  color: #35003e;
-  border: none;
-  padding: 14px 28px;
+  background: #007bff;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 18px 36px;
   border-radius: 25px;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 20px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   transition: all 0.3s ease;
 }
 
 .discover-btn:hover {
   transform: scale(1.05);
 }
+
 
 .car-slider {
   flex: 2;
