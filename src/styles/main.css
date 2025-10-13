@@ -870,13 +870,35 @@ body {
 /* =====================================================
    ====== CAR COLLECTIONS STYLES ======
    ===================================================== */
+.car-header {
+  width: 100%;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #e202ff, #9e00f7, #5301ee, #9e00f7, #e202ff);
+  color: #fff;
+  text-align: center;
+}
+
+.car-header h1 {
+  font-size: 36px;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+
+.car-header p {
+  font-size: 18px;
+  margin: 0;
+  opacity: 0.9;
+}
+
 .car-section {
   position: relative;
   background-size: cover;
   background-position: center;
   color: #fff;
-  padding: 100px 80px;
+  height: 900px;
   overflow: hidden;
+  display: flex;
+  align-items: stretch;
 }
 
 .car-section::before {
@@ -889,22 +911,21 @@ body {
 
 .car-overlay {
   position: relative;
-  z-index: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
+  width: 100%;
+  height: 100%;
 }
 
 .car-left {
   flex: 1;
-  max-width: 420px;
-}
-
-.car-left h2 {
-  font-size: 42px;
-  font-weight: 700;
-  margin-bottom: 10px;
+  background: rgba(55, 0, 75, 0.6);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  border-radius: 0;
 }
 
 .car-left p {
@@ -930,32 +951,36 @@ body {
 }
 
 .car-slider {
-  position: relative;
   flex: 2;
+  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .slides-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 25px;
-  width: 900px;
-  overflow: hidden;
-  transition: transform 0.6s ease;
+  width: 100%;
+  position: relative;
 }
 
 .slide {
-  flex: 0 0 22%;
+  flex: 0 0 300px;
   background: #fff;
   border-radius: 18px;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 .slide img {
   width: 100%;
-  height: 70%;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -1005,6 +1030,9 @@ body {
 }
 
 .nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.15);
   border: none;
   color: #fff;
@@ -1013,7 +1041,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 6;
+  z-index: 5;
 }
 
 .nav-btn:hover {
@@ -1021,14 +1049,13 @@ body {
 }
 
 .prev {
-  position: absolute;
-  left: -70px;
+  left: 10px;
 }
 
 .next {
-  position: absolute;
-  right: -70px;
+  right: 10px;
 }
+
 
 
 /* =====================================================
