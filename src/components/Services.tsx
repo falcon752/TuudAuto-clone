@@ -1,4 +1,3 @@
-
 import {
   FaCarSide,
   FaMoneyBillWave,
@@ -8,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
 import serviceBg from "../assets/images/service.png";
+import { motion } from "framer-motion";
 
 export default function Services() {
   const features = [
@@ -40,52 +40,150 @@ export default function Services() {
     },
   ];
 
+  const fadeUpDown = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const pop = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: { opacity: 1, scale: 1 },
+  };
+
   return (
     <section className="services-section">
-      {/* Transparent car background image */}
       <div className="services-bg">
-        <img
+        <motion.img
           src={serviceBg}
           alt="Service background"
           className="services-bg-img"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
         />
       </div>
 
-      <div className="services-content">
-        <span className="services-badge">#1 Car Marketplace in UK</span>
+      <motion.div className="services-content" initial="hidden">
+        <motion.span
+          className="services-badge"
+          variants={pop}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          initial="hidden"
+          transition={{ type: "spring", stiffness: 100, damping: 10 }}
+        >
+          #1 Car Marketplace in UK
+        </motion.span>
 
-        <h1 className="services-title">
+        <motion.h1
+          className="services-title"
+          variants={fadeUpDown}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+        >
           Move and Find Your{" "}
           <span className="services-gradient-text">Perfect Ride</span>
-        </h1>
+        </motion.h1>
 
-        <p className="services-subtitle">
+        <motion.p
+          className="services-subtitle"
+          variants={fadeUpDown}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+        >
           Whether you’re buying, selling or transporting your Vehicle, TuudAuto
           makes it easy to find your next car, truck, or SUV.
-        </p>
+        </motion.p>
 
-        <div className="services-grid">
+        <motion.div
+          className="services-grid"
+          variants={fadeUpDown}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ staggerChildren: 0.15 }}
+        >
           {features.map((f, i) => (
-            <div key={i} className="services-card">
-              <div className="services-icon">{f.icon}</div>
-              <h3 className="services-card-title">{f.title}</h3>
-              <p className="services-card-text">{f.text}</p>
-              <div className="services-tags">
+            <motion.div
+              key={i}
+              className="services-card"
+              variants={pop}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.div
+                className="services-icon"
+                variants={pop}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+              >
+                {f.icon}
+              </motion.div>
+              <motion.h3
+                className="services-card-title"
+                variants={fadeUpDown}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5 }}
+              >
+                {f.title}
+              </motion.h3>
+              <motion.p
+                className="services-card-text"
+                variants={fadeUpDown}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5 }}
+              >
+                {f.text}
+              </motion.p>
+              <motion.div
+                className="services-tags"
+                variants={fadeUpDown}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ staggerChildren: 0.1 }}
+              >
                 {f.tags.map((tag, idx) => (
-                  <span key={idx} className="services-tag">
+                  <motion.span
+                    key={idx}
+                    className="services-tag"
+                    variants={pop}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                  >
                     {tag.icon}
                     {tag.text}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <p className="services-footer">
+        <motion.p
+          className="services-footer"
+          variants={fadeUpDown}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+        >
           Trusted by thousands of car buyers and sellers
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </section>
   );
 }

@@ -20,6 +20,16 @@ const heroSubItems = [
   "#1 Car Transport Service",
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const pop = {
+  hidden: { scale: 0, opacity: 0 },
+  visible: { scale: 1, opacity: 1 },
+};
+
 const Hero: React.FC = () => {
   const [index, setIndex] = React.useState(0);
 
@@ -35,16 +45,21 @@ const Hero: React.FC = () => {
       <div className="hero-overlay" />
 
       <div className="container hero-inner">
-        <div className="hero-left">
-          <div className="badge">
+        <motion.div
+          className="hero-left"
+          initial="hidden"
+          animate="visible"
+          transition={{ staggerChildren: 0.15 }}
+        >
+          <motion.div className="badge" variants={pop}>
             <FaShieldAlt className="badge-icon" />
             Trusted Car Transport Service
-          </div>
+          </motion.div>
 
-          <h1 className="hero-title">
+          <motion.h1 className="hero-title" variants={fadeUp}>
             <span className="line1">We Drive,</span>
             <span className="line2">You Relax</span>
-          </h1>
+          </motion.h1>
 
           <div style={{ height: "100px", overflow: "hidden" }}>
             <AnimatePresence>
@@ -61,117 +76,94 @@ const Hero: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          <p className="hero-desc">
+          <motion.p className="hero-desc" variants={fadeUp}>
             Professional car shipping services with verified drivers. Safe,
             secure, and reliable transport nationwide.
-          </p>
+          </motion.p>
 
-          <ul className="features-grid">
-            <li>
-              <FaCheckCircle className="feature-icon green-check" />
-              Fully Insured Transport
-            </li>
-            <li>
-              <FaCheckCircle className="feature-icon green-check" />
-              Professional Drivers
-            </li>
-            <li>
-              <FaCheckCircle className="feature-icon green-check" />
-              Real-time GPS Tracking
-            </li>
-            <li>
-              <FaCheckCircle className="feature-icon green-check" />
-              Door-to-Door Service
-            </li>
-          </ul>
+          <motion.ul className="features-grid" variants={fadeUp}>
+            {["Fully Insured Transport", "Professional Drivers", "Real-time GPS Tracking", "Door-to-Door Service"].map((feat, i) => (
+              <motion.li key={i} variants={pop}>
+                <FaCheckCircle className="feature-icon green-check" />
+                {feat}
+              </motion.li>
+            ))}
+          </motion.ul>
 
-          <div className="hero-cta">
-            <button className="btn primary">
+          <motion.div className="hero-cta" variants={fadeUp}>
+            <motion.button className="btn primary" variants={pop}>
               <FaPhoneAlt className="btn-icon" /> Get Free Quote
-            </button>
-            <button className="btn ghost">
+            </motion.button>
+            <motion.button className="btn ghost" variants={pop}>
               Learn More <FaArrowRight className="btn-icon" />
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
-          <div className="support-row">
+          <motion.div className="support-row" variants={fadeUp}>
             <FaPhoneAlt className="icon" style={{ color: "#28a745" }} /> 24/7
             Support
-            <FaMapMarkerAlt
-              className="icon"
-              style={{ color: "#007bff" }}
-            />{" "}
+            <FaMapMarkerAlt className="icon" style={{ color: "#007bff" }} />{" "}
             Nationwide Service
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <aside className="hero-card">
-          <h4>Why Choose TuudAuto?</h4>
-          <div className="rating">
+        <motion.aside
+          className="hero-card"
+          initial="hidden"
+          animate="visible"
+          transition={{ staggerChildren: 0.1 }}
+        >
+          <motion.h4 variants={fadeUp}>Why Choose TuudAuto?</motion.h4>
+          <motion.div className="rating" variants={pop}>
             <FaStar />
             <FaStar />
             <FaStar />
             <FaStar />
             <FaStar style={{ color: "#ffd24d" }} />
-          </div>
-          <div className="sub-rating">Rated 4.9/5 by customers</div>
+          </motion.div>
+          <motion.div className="sub-rating" variants={fadeUp}>
+            Rated 4.9/5 by customers
+          </motion.div>
 
-          <div className="kpis">
-            <div className="kpi">
-              <div className="kpi-icon">
-                <FaClock />
-              </div>
-              <div className="kpi-text">
-                <div className="kpi-number">24hrs</div>
-                <div className="kpi-label">Response Time</div>
-              </div>
-            </div>
+          <motion.div className="kpis" variants={fadeUp}>
+            {[
+              { icon: FaClock, number: "24hrs", label: "Response Time" },
+              { icon: FaShieldAlt, number: "98%", label: "Success Rate" },
+              { icon: FaTruck, number: "10,000+", label: "Cars Transported" },
+              { icon: FaUserFriends, number: "5,000+", label: "Happy Clients" },
+            ].map((kpi, i) => {
+              const Icon = kpi.icon;
+              return (
+                <motion.div className="kpi" key={i} variants={pop}>
+                  <div className="kpi-icon">
+                    <Icon />
+                  </div>
+                  <div className="kpi-text">
+                    <div className="kpi-number">{kpi.number}</div>
+                    <div className="kpi-label">{kpi.label}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
 
-            <div className="kpi">
-              <div className="kpi-icon">
-                <FaShieldAlt />
-              </div>
-              <div className="kpi-text">
-                <div className="kpi-number">98%</div>
-                <div className="kpi-label">Success Rate</div>
-              </div>
-            </div>
+          <motion.hr variants={fadeUp} />
 
-            <div className="kpi">
-              <div className="kpi-icon">
-                <FaTruck />
-              </div>
-              <div className="kpi-text">
-                <div className="kpi-number">10,000+</div>
-                <div className="kpi-label">Cars Transported</div>
-              </div>
-            </div>
-
-            <div className="kpi">
-              <div className="kpi-icon">
-                <FaUserFriends />
-              </div>
-              <div className="kpi-text">
-                <div className="kpi-number">5,000+</div>
-                <div className="kpi-label">Happy Clients</div>
-              </div>
-            </div>
-          </div>
-
-          <hr />
-
-          <div className="card-icons">
-            <div className="ci">
-              <FaShieldAlt /> Fully Insured
-            </div>
-            <div className="ci">
-              <FaTruck /> GPS Tracked
-            </div>
-            <div className="ci">
-              <FaUserFriends /> Verified Drivers
-            </div>
-          </div>
-        </aside>
+          <motion.div className="card-icons" variants={fadeUp}>
+            {[
+              { icon: FaShieldAlt, text: "Fully Insured" },
+              { icon: FaTruck, text: "GPS Tracked" },
+              { icon: FaUserFriends, text: "Verified Drivers" },
+            ].map((ci, i) => {
+              const Icon = ci.icon;
+              return (
+                <motion.div className="ci" key={i} variants={pop}>
+                  <Icon /> {ci.text}
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </motion.aside>
       </div>
     </section>
   );

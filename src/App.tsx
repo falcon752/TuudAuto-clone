@@ -6,6 +6,7 @@ import BookingSteps from "./components/BookingSteps";
 import CarCollections from "./components/CarCollections";
 import WhyChooseTuudAuto from "./components/WhyChooseTuudAuto";
 import { Testimonials } from "./components/Testimonial";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <CarCollections />
         <WhyChooseTuudAuto />
         <Testimonials />
+        <Footer />
       </main>
     </div>
   );

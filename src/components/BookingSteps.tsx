@@ -5,6 +5,7 @@ import {
   FaCarSide,
 } from "react-icons/fa";
 import carKeyBg from "../assets/images/car-key.jpg";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -34,36 +35,71 @@ const steps = [
 ];
 
 export default function BookingSteps() {
+  const fadeUpDown = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const pop = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: { opacity: 1, scale: 1 },
+  };
+
   return (
     <section
       className="booking-section"
       style={{ backgroundImage: `url(${carKeyBg})` }}
     >
       <div className="booking-overlay" />
-      <div className="booking-content">
-        <h2 className="booking-title">
+
+      <motion.div
+        className="booking-content"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ staggerChildren: 0.15 }}
+      >
+        <motion.h2 className="booking-title" variants={fadeUpDown} transition={{ duration: 0.7 }}>
           How to book your service with TuudAuto?
-        </h2>
-        <p className="booking-subtitle">
+        </motion.h2>
+        <motion.p className="booking-subtitle" variants={fadeUpDown} transition={{ duration: 0.7 }}>
           TuudAuto makes car shipping easy with a simple 4-step process.
-        </p>
-        <p className="booking-subtext">Get started today!</p>
+        </motion.p>
+        <motion.p className="booking-subtext" variants={fadeUpDown} transition={{ duration: 0.7 }}>
+          Get started today!
+        </motion.p>
 
-        <div className="booking-grid">
+        <motion.div className="booking-grid" variants={fadeUpDown} transition={{ staggerChildren: 0.15 }}>
           {steps.map((step, i) => (
-            <div className="booking-card" key={i}>
-              <div className="icon-circle">{step.icon}</div>
-              <h3>{step.title}</h3>
-              <p>{step.desc}</p>
-              <span className="step-number">{step.number}</span>
-            </div>
+            <motion.div
+              className="booking-card"
+              key={i}
+              variants={pop}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.div className="icon-circle" variants={pop}>
+                {step.icon}
+              </motion.div>
+              <motion.h3 variants={fadeUpDown}>{step.title}</motion.h3>
+              <motion.p variants={fadeUpDown}>{step.desc}</motion.p>
+              <motion.span className="step-number" variants={pop}>
+                {step.number}
+              </motion.span>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <button className="quote-btn">
+        <motion.button
+          className="quote-btn"
+          variants={pop}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+        >
           <span>Send Us a Quote</span>
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
     </section>
   );
 }
