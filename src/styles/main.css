@@ -926,14 +926,7 @@ body {
 .car-header {
   width: 100%;
   padding: 60px 20px;
-  background: linear-gradient(
-    135deg,
-    #e202ff,
-    #9e00f7,
-    #5301ee,
-    #9e00f7,
-    #e202ff
-  );
+  background: linear-gradient(135deg, #e202ff, #9e00f7, #5301ee, #9e00f7, #e202ff);
   color: #fff;
   text-align: center;
 }
@@ -955,7 +948,7 @@ body {
   background-size: cover;
   background-position: center;
   color: #fff;
-  height: 700px; /* reduced height */
+  height: 700px;
   overflow: hidden;
   display: flex;
   align-items: stretch;
@@ -986,7 +979,6 @@ body {
   align-items: flex-start;
   position: relative;
   z-index: 2;
-  border-radius: 0;
   margin-top: 10px;
 }
 
@@ -1043,6 +1035,8 @@ body {
 
 .slide {
   flex: 0 0 300px;
+  max-width: 300px;
+  min-width: 300px;
   background: #fff;
   border-radius: 18px;
   overflow: hidden;
@@ -1127,6 +1121,7 @@ body {
 .next {
   right: 10px;
 }
+
 
 /* =====================================================
    ====== WHY CHOOSE TUUD AUTO STYLES ======
