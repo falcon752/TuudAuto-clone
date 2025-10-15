@@ -23,6 +23,7 @@ import carBg from "@/assets/images/car-bg.jpg";
 
 const MySwal = withReactContent(Swal);
 
+// ==== Car Schema ====
 const carSchema = z.object({
   brand: z.string().min(1, { message: "Brand is required" }),
   model: z.string().min(1, { message: "Model is required" }),
@@ -38,16 +39,8 @@ const carSchema = z.object({
     message: "Select transmission",
   }),
   body_type: z.string().min(1, { message: "Body type is required" }),
-  seats: z
-    .number()
-    .int()
-    .min(1, { message: "Seats must be at least 1" })
-    .max(16),
-  doors: z
-    .number()
-    .int()
-    .min(1, { message: "Doors must be at least 1" })
-    .max(6),
+  seats: z.number().int().min(1).max(16),
+  doors: z.number().int().min(1).max(6),
   price: z.number().nonnegative({ message: "Price must be 0 or greater" }),
   is_new: z.boolean(),
   description: z.string().optional(),
@@ -94,6 +87,7 @@ const carSchema = z.object({
 
 type CarFormValues = z.infer<typeof carSchema>;
 
+// ==== Default Values ====
 const defaultValues: Partial<CarFormValues> = {
   brand: "",
   model: "",
@@ -122,6 +116,7 @@ const defaultValues: Partial<CarFormValues> = {
 
 const safetyOptions = ["ABS", "Airbags", "ESP", "Lane Assist", "Blind Spot"];
 
+// ==== Car Form Component ====
 const CarForm: React.FC = () => {
   const {
     register,
@@ -136,6 +131,8 @@ const CarForm: React.FC = () => {
     defaultValues,
     mode: "onSubmit",
   });
+
+  const [selectedPreviews, setSelectedPreviews] = React.useState<string[]>([]);
 
   const isNew = watch("is_new");
   const selectedSafety = watch("specifications.safety") || [];
@@ -204,11 +201,11 @@ const CarForm: React.FC = () => {
       className="min-h-screen bg-cover bg-center p-6 flex justify-center items-start"
       style={{ backgroundImage: `url(${carBg})` }}
     >
-      <div className="w-full max-w-6xl backdrop-blur-md bg-white/30 p-6 rounded-2xl text-black space-y-8">
+      <div className="w-full max-w-6xl backdrop-blur-xl bg-white/50 p-6 rounded-2xl text-black space-y-8">
         <h1 className="text-3xl font-bold text-center mb-6">Car Form</h1>
 
         <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-8">
-          {/* Car Details Section */}
+          {/* ==== Car Details Section ==== */}
           <section>
             <h2 className="text-xl font-semibold mb-4">Car Details</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -381,7 +378,7 @@ const CarForm: React.FC = () => {
             </div>
           </section>
 
-          {/* Description & Features */}
+          {/* ==== Description & Features Section ==== */}
           <section>
             <h2 className="text-xl font-semibold mb-4">
               Description & Features
@@ -413,17 +410,47 @@ const CarForm: React.FC = () => {
               </div>
               <div>
                 <Label>Upload Images</Label>
-                <input
-                  type="file"
-                  multiple
-                  {...register("images")}
-                  className="block w-full"
-                />
+                <div className="flex items-center gap-4">
+                  {/* Black button */}
+                  <label className="bg-black text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-800">
+                    Choose Images
+                    <input
+                      type="file"
+                      multiple
+                      {...register("images")}
+                      className="hidden"
+                      onChange={(e) => {
+                        const files = e.target.files;
+                        if (files && files.length) {
+                          const previews: string[] = [];
+                          for (let i = 0; i < files.length; i++) {
+                            previews.push(URL.createObjectURL(files[i]));
+                          }
+                          setSelectedPreviews(previews);
+                        } else {
+                          setSelectedPreviews([]);
+                        }
+                      }}
+                    />
+                  </label>
+
+                  {/* Preview box */}
+                  <div className="flex gap-2 overflow-x-auto">
+                    {selectedPreviews.map((src, index) => (
+                      <img
+                        key={index}
+                        src={src}
+                        alt={`preview-${index}`}
+                        className="w-20 h-20 object-cover rounded border"
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* Specifications */}
+          {/* ==== Specifications Section ==== */}
           <section>
             <h2 className="text-xl font-semibold mb-4">Specifications</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -489,7 +516,7 @@ const CarForm: React.FC = () => {
             </div>
           </section>
 
-          {/* Seller Info & Publish */}
+          {/* ==== Seller Info & Publish Section ==== */}
           <section>
             <h2 className="text-xl font-semibold mb-4">
               Seller Info & Publish
@@ -571,6 +598,7 @@ const CarForm: React.FC = () => {
             </div>
           </section>
 
+          {/* ==== Form Actions ==== */}
           <div className="flex justify-end gap-3">
             <Button variant="ghost" onClick={() => reset()}>
               Reset
