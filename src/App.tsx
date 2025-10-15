@@ -8,7 +8,6 @@ import CarCollections from "./components/CarCollections"
 import WhyChooseTuudAuto from "./components/WhyChooseTuudAuto"
 import { Testimonials } from "./components/Testimonial"
 import Footer from "./components/Footer"
-import "./styles/main.css"
 
 function App() {
   return (
