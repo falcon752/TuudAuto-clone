@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 export default function Services() {
   const features = [
     {
-      icon: <FaCarSide className="services-icon-svg" />,
+      icon: <FaCarSide className="text-purple-600 text-2xl" />,
       title: "Buy Your Perfect Car",
       text: "Browse thousands of listings with detailed filters and trusted reviews to help you make the right choice.",
       tags: [
@@ -21,7 +21,7 @@ export default function Services() {
       ],
     },
     {
-      icon: <FaMoneyBillWave className="services-icon-svg" />,
+      icon: <FaMoneyBillWave className="text-purple-600 text-2xl" />,
       title: "Sell With Confidence",
       text: "Get instant valuations and connect with millions of potential buyers. List your car for free and sell securely.",
       tags: [
@@ -30,7 +30,7 @@ export default function Services() {
       ],
     },
     {
-      icon: <FaTruckMoving className="services-icon-svg" />,
+      icon: <FaTruckMoving className="text-purple-600 text-2xl" />,
       title: "Easy Transport",
       text: "Connect with experienced drivers to transport your newly acquired vehicle safely and securely.",
       tags: [
@@ -51,22 +51,25 @@ export default function Services() {
   };
 
   return (
-    <section className="services-section">
-      <div className="services-bg">
-        <motion.img
-          src={serviceBg}
-          alt="Service background"
-          className="services-bg-img"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-        />
-      </div>
+    <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-100 py-24 px-4 md:px-8">
+      {/* Background Image */}
+      <motion.img
+        src={serviceBg}
+        alt="Service background"
+        className="absolute top-[40%] right-[-30%] w-[700px] lg:w-[800px] xl:w-[900px] max-w-none -translate-y-1/2 pointer-events-none"
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 0.6, scale: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8 }}
+      />
 
-      <motion.div className="services-content" initial="hidden">
+      {/* Content */}
+      <motion.div
+        className="relative z-10 max-w-6xl mx-auto text-center"
+        initial="hidden"
+      >
         <motion.span
-          className="services-badge"
+          className="inline-block bg-purple-100 text-purple-600 font-medium text-sm px-4 py-1 rounded-full mb-3"
           variants={pop}
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -77,7 +80,7 @@ export default function Services() {
         </motion.span>
 
         <motion.h1
-          className="services-title"
+          className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-gray-900 mb-4"
           variants={fadeUpDown}
           initial="hidden"
           whileInView="visible"
@@ -85,23 +88,26 @@ export default function Services() {
           transition={{ duration: 0.7 }}
         >
           Move and Find Your{" "}
-          <span className="services-gradient-text">Perfect Ride</span>
+          <span className="block bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
+            Perfect Ride
+          </span>
         </motion.h1>
 
         <motion.p
-          className="services-subtitle"
+          className="text-gray-500 max-w-xl mx-auto mb-16 text-base sm:text-lg leading-relaxed"
           variants={fadeUpDown}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7 }}
         >
-          Whether you’re buying, selling or transporting your Vehicle, TuudAuto
+          Whether you’re buying, selling, or transporting your Vehicle, TuudAuto
           makes it easy to find your next car, truck, or SUV.
         </motion.p>
 
+        {/* Features Grid */}
         <motion.div
-          className="services-grid"
+          className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3"
           variants={fadeUpDown}
           initial="hidden"
           whileInView="visible"
@@ -111,7 +117,7 @@ export default function Services() {
           {features.map((f, i) => (
             <motion.div
               key={i}
-              className="services-card"
+              className="bg-white rounded-2xl shadow-md p-6 text-left hover:-translate-y-1 hover:shadow-lg transition-transform duration-300"
               variants={pop}
               initial="hidden"
               whileInView="visible"
@@ -119,7 +125,7 @@ export default function Services() {
               transition={{ duration: 0.5 }}
             >
               <motion.div
-                className="services-icon"
+                className="w-12 h-12 flex items-center justify-center rounded-lg mb-4 bg-gradient-to-br from-purple-200/25 to-blue-200/25"
                 variants={pop}
                 initial="hidden"
                 whileInView="visible"
@@ -127,8 +133,9 @@ export default function Services() {
               >
                 {f.icon}
               </motion.div>
+
               <motion.h3
-                className="services-card-title"
+                className="font-semibold text-gray-900 text-lg mb-2"
                 variants={fadeUpDown}
                 initial="hidden"
                 whileInView="visible"
@@ -137,8 +144,9 @@ export default function Services() {
               >
                 {f.title}
               </motion.h3>
+
               <motion.p
-                className="services-card-text"
+                className="text-gray-500 text-sm mb-4"
                 variants={fadeUpDown}
                 initial="hidden"
                 whileInView="visible"
@@ -147,8 +155,9 @@ export default function Services() {
               >
                 {f.text}
               </motion.p>
+
               <motion.div
-                className="services-tags"
+                className="flex flex-wrap gap-3 text-gray-500 text-sm"
                 variants={fadeUpDown}
                 initial="hidden"
                 whileInView="visible"
@@ -158,7 +167,7 @@ export default function Services() {
                 {f.tags.map((tag, idx) => (
                   <motion.span
                     key={idx}
-                    className="services-tag"
+                    className="flex items-center gap-1"
                     variants={pop}
                     initial="hidden"
                     whileInView="visible"
@@ -174,7 +183,7 @@ export default function Services() {
         </motion.div>
 
         <motion.p
-          className="services-footer"
+          className="mt-10 text-gray-400 text-sm"
           variants={fadeUpDown}
           initial="hidden"
           whileInView="visible"
