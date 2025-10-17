@@ -12,11 +12,11 @@ interface Car {
   id: number;
   name: string;
   year: number;
-  type: string; // Petrol, Electric, Diesel
-  category: string; // Hatchback, Sedan
+  type: string;
+  category: string;
   seats: number;
-  doors: number; // Added doors for the icon layout
-  transmission: string; // Added transmission for the icon layout
+  doors: number;
+  transmission: string;
   price: string;
   img: string;
 }
