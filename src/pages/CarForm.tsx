@@ -136,15 +136,15 @@ const CarForm: React.FC = () => {
   const isNew = watch("is_new");
   const selectedSafety = watch("specifications.safety") || [];
 
-  const formatPrice = (value: string | number) => {
-    if (typeof value === "number") value = value.toString();
-    const number = Number(value.replace(/,/g, ""));
-    if (isNaN(number)) return "";
-    return number.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-  };
+  // const formatPrice = (value: string | number) => {
+  //   if (typeof value === "number") value = value.toString();
+  //   const number = Number(value.replace(/,/g, ""));
+  //   if (isNaN(number)) return "";
+  //   return number.toLocaleString("en-US", {
+  //     minimumFractionDigits: 2,
+  //     maximumFractionDigits: 2,
+  //   });
+  // };
 
   const [priceInput, setPriceInput] = React.useState("");
 
