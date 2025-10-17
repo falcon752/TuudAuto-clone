@@ -41,17 +41,18 @@ const NavBar: React.FC = () => {
           </div>
 
           {/* Search (hidden on mobile until md) */}
-          <div className="hidden md:flex items-center border border-gray-400 rounded-full shadow-inner px-2">
+          <div className="hidden md:flex items-center border border-gray-400 px-2 py-1 rounded-[16px] shadow-inner">
             <input
               type="search"
               placeholder="Search by brand, model, or keyword..."
-              className="outline-none bg-transparent px-3 py-1 w-[400px] lg:w-[600px] text-sm sm:text-base"
+              className="outline-none bg-transparent px-4 py-2 w-[400px] lg:w-[600px] text-sm sm:text-base rounded-[20px]"
             />
-            <button className="bg-[#270131] text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#a14dc7] transition-all">
+            <button className="bg-[#270131] text-white w-13 h-10 rounded-[20px] flex items-center justify-center hover:bg-[#a14dc7] transition-all -mr-1">
               <FaSearch />
             </button>
           </div>
         </div>
+
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-4">
@@ -83,11 +84,22 @@ const NavBar: React.FC = () => {
             return (
               <div
                 key={idx}
-                className={`flex items-center gap-1.5 px-2 py-1 rounded font-medium text-xs sm:text-sm cursor-pointer hover:scale-105 hover:bg-purple-700 transition ${
+                className={`flex items-center gap-1.5 px-2 py-1 rounded font-medium text-xs cursor-pointer hover:scale-105 transition ${
                   idx === 0 ? "bg-white/10 shadow-inner" : ""
                 }`}
+                style={
+                  { transition: "all 0.2s", "--tw-bg-opacity": 1 } as React.CSSProperties &
+                    Record<string, string | number>
+                }
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#593b61")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor =
+                    idx === 0 ? "rgba(255,255,255,0.1)" : "transparent")
+                }
               >
-                <Icon className="text-base sm:text-lg" />
+                <Icon className="text-base" />
                 {item.label}
               </div>
             );
