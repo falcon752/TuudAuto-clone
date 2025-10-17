@@ -2,8 +2,6 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,8 +19,8 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { X } from "lucide-react";
-
-const MySwal = withReactContent(Swal);
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 // ==== Car Schema ====
 const carSchema = z.object({
@@ -96,12 +94,12 @@ const defaultValues: Partial<CarFormValues> = {
   engine_type: "",
   transmission: "Automatic",
   body_type: "",
-  seats: 4,
+  seats: 5,
   doors: 4,
   price: 0,
   is_new: false,
   mileage: 0,
-  color: "#000000",
+  color: "",
   features: "",
   specifications: { performance: {}, dimensions: {}, capacity: {}, safety: [] },
   seller_info: {
@@ -172,21 +170,23 @@ const CarForm: React.FC = () => {
     }
   };
 
-React.useEffect(() => {
-  if (defaultValues.price) {
-    setPriceInput(
-      defaultValues.price.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
-    );
-  }
-}, []);
-
+  React.useEffect(() => {
+    if (defaultValues.price) {
+      setPriceInput(
+        defaultValues.price.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+  }, []);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceInput(e.target.value);
   };
+
+  const [featureInput, setFeatureInput] = React.useState("");
+  const [featureTags, setFeatureTags] = React.useState<string[]>([]);
 
   const onSubmit = (data: CarFormValues) => {
     const featuresArray =
@@ -207,19 +207,12 @@ React.useEffect(() => {
     };
     console.log("Car form submitted:", payload);
 
-    MySwal.fire({
-      icon: "success",
-      title: "Success!",
-      text: "Car listing submitted successfully!",
-    });
+    toast.success("Car listing submitted successfully!");
   };
 
   const onError = (errors: any) => {
-    MySwal.fire({
-      icon: "error",
-      title: "Incomplete Form",
-      text: "Please fill all required fields correctly.",
-    });
+    toast.error("Please fill all required fields correctly.");
+
     const firstErrorField = Object.keys(errors)[0];
     const el = document.querySelector(`[name="${firstErrorField}"]`);
     el?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -244,7 +237,6 @@ React.useEffect(() => {
     "Orange",
     "Purple",
   ];
-
 
   const [selectedImages, setSelectedImages] = React.useState<File[]>([]);
 
@@ -397,26 +389,25 @@ React.useEffect(() => {
                   </p>
                 )}
               </div>
-<div>
-  <Label>Color</Label>
-  <div className="relative">
-    <Input
-      list="color-options"
-      placeholder="Select or type a color"
-      value={watch("color") || ""}
-      onChange={(e) => {
-        setValue("color", e.target.value);
-      }}
-      className="w-full"
-    />
-    <datalist id="color-options">
-      {commonColors.map((color) => (
-        <option key={color} value={color} />
-      ))}
-    </datalist>
-  </div>
-</div>
-
+              <div>
+                <Label>Color</Label>
+                <div className="relative">
+                  <Input
+                    list="color-options"
+                    placeholder="Select or type a color"
+                    value={watch("color") || ""}
+                    onChange={(e) => {
+                      setValue("color", e.target.value);
+                    }}
+                    className="w-full"
+                  />
+                  <datalist id="color-options">
+                    {commonColors.map((color) => (
+                      <option key={color} value={color} />
+                    ))}
+                  </datalist>
+                </div>
+              </div>
 
               <div>
                 <Label>Fuel Economy</Label>
@@ -452,35 +443,79 @@ React.useEffect(() => {
             <h2 className="text-xl font-semibold mb-4">
               Description & Features
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              {/* Description */}
               <div>
                 <Label>Description</Label>
                 <Textarea {...register("description")} />
               </div>
+
+              {/* Features */}
               <div>
-                <Label>Features (comma separated)</Label>
-                <Input {...register("features")} />
-              </div>
-              <div>
-                <Label>Is this a new car?</Label>
-                <Controller
-                  control={control}
-                  name="is_new"
-                  render={({ field }) => (
-                    <div className="flex items-center gap-3">
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={(v) => field.onChange(Boolean(v))}
-                      />
-                      <span>{isNew ? "New" : "Used"}</span>
+                <Label>Features</Label>
+                <div className="flex flex-wrap gap-2 border p-2 rounded">
+                  {featureTags.map((tag, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-black text-white px-2 py-1 rounded flex items-center gap-1"
+                    >
+                      <span>{tag}</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = featureTags.filter(
+                            (_, i) => i !== idx
+                          );
+                          setFeatureTags(updated);
+                          setValue("features", updated.join(", "));
+                        }}
+                        className="text-white font-bold"
+                      >
+                        &times;
+                      </button>
                     </div>
-                  )}
-                />
+                  ))}
+                  <input
+                    type="text"
+                    value={featureInput}
+                    onChange={(e) => setFeatureInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "," || e.key === "Enter") {
+                        e.preventDefault();
+                        const newTag = featureInput.trim();
+                        if (newTag && !featureTags.includes(newTag)) {
+                          const updated = [...featureTags, newTag];
+                          setFeatureTags(updated);
+                          setValue("features", updated.join(", "));
+                        }
+                        setFeatureInput("");
+                      }
+                    }}
+                    placeholder="Type a feature and press ','"
+                    className="flex-1 outline-none border-none"
+                  />
+                </div>
               </div>
+
+              {/* Image Upload */}
               <div>
                 <Label>Upload Images</Label>
-                <Input
+                <div className="flex items-center gap-3 mt-2">
+                  <Button
+                    variant="default"
+                    className="bg-black text-white hover:bg-gray-800"
+                    onClick={() =>
+                      document.getElementById("images-upload")?.click()
+                    }
+                  >
+                    Choose Files
+                  </Button>
+                  <span>Upload Images</span>
+                </div>
+
+                <input
                   type="file"
+                  id="images-upload"
                   accept="image/*"
                   multiple
                   onChange={(e) => {
@@ -490,7 +525,9 @@ React.useEffect(() => {
                     setSelectedImages((prev) => [...prev, ...files]);
                     setValue("images", files as any);
                   }}
+                  className="hidden"
                 />
+
                 {selectedImages.length > 0 && (
                   <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                     {selectedImages.map((file, index) => {
@@ -527,6 +564,24 @@ React.useEffect(() => {
                     })}
                   </div>
                 )}
+              </div>
+
+              {/* Is New Switch */}
+              <div>
+                <Label>Is this a new car?</Label>
+                <Controller
+                  control={control}
+                  name="is_new"
+                  render={({ field }) => (
+                    <div className="flex items-center gap-3">
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={(v) => field.onChange(Boolean(v))}
+                      />
+                      <span>{isNew ? "New" : "Used"}</span>
+                    </div>
+                  )}
+                />
               </div>
             </div>
           </section>
@@ -681,13 +736,31 @@ React.useEffect(() => {
 
           {/* ==== Form Actions ==== */}
           <div className="flex justify-end gap-3">
-            <Button variant="ghost" onClick={() => reset()}>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                reset(defaultValues);
+                setPriceInput(
+                  defaultValues.price?.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }) || "0.00"
+                );
+                setSelectedImages([]);
+                setFeatureTags([]);
+                setFeatureInput("");
+
+                toast.success("Form has been reset successfully!");
+              }}
+            >
               Reset
             </Button>
+
             <Button type="submit">Submit</Button>
           </div>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 };
