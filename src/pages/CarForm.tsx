@@ -19,7 +19,8 @@ import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import carBg from "@/assets/images/car-bg.jpg";
+import { Card, CardContent } from "@/components/ui/card";
+import { X } from "lucide-react";
 
 const MySwal = withReactContent(Swal);
 
@@ -132,7 +133,7 @@ const CarForm: React.FC = () => {
     mode: "onSubmit",
   });
 
-  const [selectedPreviews, setSelectedPreviews] = React.useState<string[]>([]);
+  // const [selectedPreviews, setSelectedPreviews] = React.useState<string[]>([]);
 
   const isNew = watch("is_new");
   const selectedSafety = watch("specifications.safety") || [];
@@ -147,9 +148,44 @@ const CarForm: React.FC = () => {
     });
   };
 
+  const [priceInput, setPriceInput] = React.useState("");
+
+  const handlePriceFocus = () => {
+    if (!priceInput || priceInput === "0.00") {
+      setPriceInput("");
+    }
+  };
+
+  const handlePriceBlur = () => {
+    const num = Number(priceInput.replace(/,/g, ""));
+    if (!isNaN(num)) {
+      setValue("price", num);
+      setPriceInput(
+        num.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      );
+    } else {
+      setPriceInput("0.00");
+      setValue("price", 0);
+    }
+  };
+
+React.useEffect(() => {
+  if (defaultValues.price) {
+    setPriceInput(
+      defaultValues.price.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    );
+  }
+}, []);
+
+
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPrice(e.target.value);
-    setValue("price", Number(formatted.replace(/,/g, "")));
+    setPriceInput(e.target.value);
   };
 
   const onSubmit = (data: CarFormValues) => {
@@ -196,12 +232,25 @@ const CarForm: React.FC = () => {
     setValue("specifications.safety", current);
   };
 
+  const commonColors = [
+    "Red",
+    "Blue",
+    "Green",
+    "Black",
+    "White",
+    "Silver",
+    "Gray",
+    "Yellow",
+    "Orange",
+    "Purple",
+  ];
+
+
+  const [selectedImages, setSelectedImages] = React.useState<File[]>([]);
+
   return (
-    <div
-      className="min-h-screen bg-cover bg-center p-6 flex justify-center items-start"
-      style={{ backgroundImage: `url(${carBg})` }}
-    >
-      <div className="w-full max-w-6xl backdrop-blur-xl bg-white/50 p-6 rounded-2xl text-black space-y-8">
+    <div className="min-h-screen bg-white p-6 flex justify-center items-start">
+      <div className="w-full max-w-6xl bg-white p-6 rounded-2xl text-black space-y-8 shadow-sm">
         <h1 className="text-3xl font-bold text-center mb-6">Car Form</h1>
 
         <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-8">
@@ -322,8 +371,11 @@ const CarForm: React.FC = () => {
               <div>
                 <Label>Price</Label>
                 <Input
-                  value={formatPrice(watch("price") || 0)}
+                  type="text"
+                  value={priceInput}
+                  onFocus={handlePriceFocus}
                   onChange={handlePriceChange}
+                  onBlur={handlePriceBlur}
                   className={errors.price ? "border-red-500" : ""}
                 />
                 {errors.price && (
@@ -345,10 +397,27 @@ const CarForm: React.FC = () => {
                   </p>
                 )}
               </div>
-              <div>
-                <Label>Color</Label>
-                <Input type="color" {...register("color")} />
-              </div>
+<div>
+  <Label>Color</Label>
+  <div className="relative">
+    <Input
+      list="color-options"
+      placeholder="Select or type a color"
+      value={watch("color") || ""}
+      onChange={(e) => {
+        setValue("color", e.target.value);
+      }}
+      className="w-full"
+    />
+    <datalist id="color-options">
+      {commonColors.map((color) => (
+        <option key={color} value={color} />
+      ))}
+    </datalist>
+  </div>
+</div>
+
+
               <div>
                 <Label>Fuel Economy</Label>
                 <Input {...register("fuel_economy")} />
@@ -393,7 +462,7 @@ const CarForm: React.FC = () => {
                 <Input {...register("features")} />
               </div>
               <div>
-                <Label>Is New?</Label>
+                <Label>Is this a new car?</Label>
                 <Controller
                   control={control}
                   name="is_new"
@@ -410,42 +479,54 @@ const CarForm: React.FC = () => {
               </div>
               <div>
                 <Label>Upload Images</Label>
-                <div className="flex items-center gap-4">
-                  {/* Black button */}
-                  <label className="bg-black text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-800">
-                    Choose Images
-                    <input
-                      type="file"
-                      multiple
-                      {...register("images")}
-                      className="hidden"
-                      onChange={(e) => {
-                        const files = e.target.files;
-                        if (files && files.length) {
-                          const previews: string[] = [];
-                          for (let i = 0; i < files.length; i++) {
-                            previews.push(URL.createObjectURL(files[i]));
-                          }
-                          setSelectedPreviews(previews);
-                        } else {
-                          setSelectedPreviews([]);
-                        }
-                      }}
-                    />
-                  </label>
-
-                  {/* Preview box */}
-                  <div className="flex gap-2 overflow-x-auto">
-                    {selectedPreviews.map((src, index) => (
-                      <img
-                        key={index}
-                        src={src}
-                        alt={`preview-${index}`}
-                        className="w-20 h-20 object-cover rounded border"
-                      />
-                    ))}
+                <Input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => {
+                    const files = e.target.files
+                      ? Array.from(e.target.files)
+                      : [];
+                    setSelectedImages((prev) => [...prev, ...files]);
+                    setValue("images", files as any);
+                  }}
+                />
+                {selectedImages.length > 0 && (
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                    {selectedImages.map((file, index) => {
+                      const previewUrl = URL.createObjectURL(file);
+                      return (
+                        <Card
+                          key={index}
+                          className="relative group overflow-hidden"
+                        >
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-1 right-1 z-10 opacity-0 group-hover:opacity-100 bg-white/80"
+                            onClick={() => {
+                              const updated = selectedImages.filter(
+                                (_, i) => i !== index
+                              );
+                              setSelectedImages(updated);
+                              setValue("images", updated as any);
+                            }}
+                          >
+                            <X className="h-4 w-4 text-red-500" />
+                          </Button>
+                          <CardContent className="p-0">
+                            <img
+                              src={previewUrl}
+                              alt={`preview-${index}`}
+                              className="w-full h-32 object-cover rounded-md"
+                            />
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </section>
@@ -591,10 +672,10 @@ const CarForm: React.FC = () => {
                 <Label>Created At</Label>
                 <Input type="date" {...register("created_at")} />
               </div>
-              <div>
+              {/* <div>
                 <Label>Visual Slider</Label>
                 <input type="range" min={0} max={100} className="w-full" />
-              </div>
+              </div> */}
             </div>
           </section>
 
