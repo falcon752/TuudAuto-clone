@@ -8,6 +8,7 @@ import {
 import { FiCheckCircle } from "react-icons/fi";
 import serviceBg from "../assets/images/service.png";
 import { motion } from "framer-motion";
+import { GridBox } from "./ui/grid-box";
 
 export default function Services() {
   const features = [
@@ -115,70 +116,20 @@ export default function Services() {
           transition={{ staggerChildren: 0.15 }}
         >
           {features.map((f, i) => (
-            <motion.div
+            <GridBox
               key={i}
-              className="bg-white rounded-2xl shadow-md p-6 text-left hover:-translate-y-1 hover:shadow-lg transition-transform duration-300"
-              variants={pop}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5 }}
-            >
-              <motion.div
-                className="w-12 h-12 flex items-center justify-center rounded-lg mb-4 bg-gradient-to-br from-purple-200/25 to-blue-200/25"
-                variants={pop}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-              >
-                {f.icon}
-              </motion.div>
-
-              <motion.h3
-                className="font-semibold text-gray-900 text-lg mb-2"
-                variants={fadeUpDown}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5 }}
-              >
-                {f.title}
-              </motion.h3>
-
-              <motion.p
-                className="text-gray-500 text-sm mb-4"
-                variants={fadeUpDown}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5 }}
-              >
-                {f.text}
-              </motion.p>
-
-              <motion.div
-                className="flex flex-wrap gap-3 text-gray-500 text-sm"
-                variants={fadeUpDown}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ staggerChildren: 0.1 }}
-              >
-                {f.tags.map((tag, idx) => (
-                  <motion.span
-                    key={idx}
-                    className="flex items-center gap-1"
-                    variants={pop}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }}
-                  >
-                    {tag.icon}
-                    {tag.text}
-                  </motion.span>
-                ))}
-              </motion.div>
-            </motion.div>
+              icon={f.icon}
+              title={f.title}
+              description={f.text}
+              tags={f.tags}
+              motionProps={{
+                variants: pop,
+                initial: "hidden",
+                whileInView: "visible",
+                viewport: { once: true, amount: 0.3 },
+                transition: { duration: 0.5 },
+              }}
+            />
           ))}
         </motion.div>
 

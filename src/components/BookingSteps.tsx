@@ -6,6 +6,7 @@ import {
 } from "react-icons/fa";
 import carKeyBg from "../assets/images/car-key.jpg";
 import { motion } from "framer-motion";
+import { StepBox } from "./ui/step-box";
 
 const steps = [
   {
@@ -47,57 +48,73 @@ export default function BookingSteps() {
 
   return (
     <section
-      className="booking-section"
+      className="relative text-center text-black overflow-hidden py-[100px] px-5 bg-cover bg-center"
       style={{ backgroundImage: `url(${carKeyBg})` }}
     >
-      <div className="booking-overlay" />
+      <div className="absolute inset-0 bg-purple-300/30 backdrop-blur-sm z-0" />
 
       <motion.div
-        className="booking-content"
+        className="relative z-10 max-w-[1350px] mx-auto"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         transition={{ staggerChildren: 0.15 }}
       >
-        <motion.h2 className="booking-title" variants={fadeUpDown} transition={{ duration: 0.7 }}>
+        <motion.h2
+          className="text-[42px] font-bold mb-4"
+          variants={fadeUpDown}
+          transition={{ duration: 0.7 }}
+        >
           How to book your service with TuudAuto?
         </motion.h2>
-        <motion.p className="booking-subtitle" variants={fadeUpDown} transition={{ duration: 0.7 }}>
+
+        <motion.p
+          className="text-lg mb-1.5"
+          variants={fadeUpDown}
+          transition={{ duration: 0.7 }}
+        >
           TuudAuto makes car shipping easy with a simple 4-step process.
         </motion.p>
-        <motion.p className="booking-subtext" variants={fadeUpDown} transition={{ duration: 0.7 }}>
+
+        <motion.p
+          className="text-lg font-medium text-black mb-15"
+          variants={fadeUpDown}
+          transition={{ duration: 0.7 }}
+        >
           Get started today!
         </motion.p>
 
-        <motion.div className="booking-grid" variants={fadeUpDown} transition={{ staggerChildren: 0.15 }}>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10"
+          variants={fadeUpDown}
+          transition={{ staggerChildren: 0.15 }}
+        >
           {steps.map((step, i) => (
-            <motion.div
-              className="booking-card"
+            <StepBox
               key={i}
-              variants={pop}
-              transition={{ duration: 0.5 }}
-            >
-              <motion.div className="icon-circle" variants={pop}>
-                {step.icon}
-              </motion.div>
-              <motion.h3 variants={fadeUpDown}>{step.title}</motion.h3>
-              <motion.p variants={fadeUpDown}>{step.desc}</motion.p>
-              <motion.span className="step-number" variants={pop}>
-                {step.number}
-              </motion.span>
-            </motion.div>
+              icon={step.icon}
+              title={step.title}
+              description={step.desc}
+              number={step.number}
+              motionProps={{
+                variants: pop,
+                transition: { duration: 0.5 },
+              }}
+            />
           ))}
         </motion.div>
 
+        {/* Quote Button with Glass Overlay */}
         <motion.button
-          className="quote-btn"
+          className="group relative bg-[#270031]/80 rounded-[15px] px-6 py-3 text-white text-[25px] font-medium cursor-pointer backdrop-blur-sm overflow-hidden transition-transform duration-300 scale-100"
           variants={pop}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
         >
-          <span>Send Us a Quote</span>
+          <span className="relative z-10">Send Us a Quote</span>
+          {/* Glass overlay */}
+          <span className="absolute bottom-[-10px] right-[-10px] w-[40px] h-[40px] bg-white/25 rounded-full backdrop-blur-[10px] transition-all duration-300 group-hover:bottom-0 group-hover:right-0 group-hover:w-full group-hover:h-full group-hover:rounded-[15px]"></span>
         </motion.button>
       </motion.div>
     </section>
