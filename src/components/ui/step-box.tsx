@@ -30,7 +30,6 @@ const StepBox = React.forwardRef<HTMLDivElement, StepBoxProps>(
       >
         <motion.div
           className="w-[90px] h-[90px] bg-white rounded-full flex items-center justify-center text-4xl text-black mb-6"
-          // keep ability to pass motion variants to inner element via motionProps.variants if desired
         >
           {icon}
         </motion.div>

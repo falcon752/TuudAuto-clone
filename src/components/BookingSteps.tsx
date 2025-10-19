@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   FaCommentDots,
   FaPhoneAlt,
@@ -5,10 +6,23 @@ import {
   FaCarSide,
 } from "react-icons/fa";
 import carKeyBg from "../assets/images/car-key.jpg";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { StepBox } from "./ui/step-box";
 
-const steps = [
+export type Step = {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+  number: string;
+};
+
+export type BookingStepsProps = {
+  steps?: Step[];
+  className?: string;
+  backgroundImage?: string;
+};
+
+const DEFAULT_STEPS: Step[] = [
   {
     icon: <FaCommentDots />,
     title: "Quick Quote",
@@ -35,21 +49,27 @@ const steps = [
   },
 ];
 
-export default function BookingSteps() {
-  const fadeUpDown = {
+export const BookingSteps: React.FC<BookingStepsProps> = ({
+  steps = DEFAULT_STEPS,
+  className = "",
+  backgroundImage,
+}) => {
+  const fadeUpDown: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
   };
 
-  const pop = {
+  const pop: Variants = {
     hidden: { opacity: 0, scale: 0 },
     visible: { opacity: 1, scale: 1 },
   };
 
+  const bgStyle = { backgroundImage: `url(${backgroundImage ?? carKeyBg})` };
+
   return (
     <section
-      className="relative text-center text-black overflow-hidden py-[100px] px-5 bg-cover bg-center"
-      style={{ backgroundImage: `url(${carKeyBg})` }}
+      className={`relative text-center text-black overflow-hidden py-[100px] px-5 bg-cover bg-center ${className}`}
+      style={bgStyle}
     >
       <div className="absolute inset-0 bg-purple-300/30 backdrop-blur-sm z-0" />
 
@@ -104,7 +124,7 @@ export default function BookingSteps() {
           ))}
         </motion.div>
 
-        {/* Quote Button with Glass Overlay */}
+        {/* Button */}
         <motion.button
           className="group relative bg-[#270031]/80 rounded-[15px] px-6 py-3 text-white text-[25px] font-medium cursor-pointer backdrop-blur-sm overflow-hidden transition-transform duration-300 scale-100"
           variants={pop}
@@ -112,11 +132,12 @@ export default function BookingSteps() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <span className="relative z-10">Send Us a Quote</span>
-          {/* Glass overlay */}
+          <span className="relative z-10">Send Us a Quote</span>          
           <span className="absolute bottom-[-10px] right-[-10px] w-[40px] h-[40px] bg-white/25 rounded-full backdrop-blur-[10px] transition-all duration-300 group-hover:bottom-0 group-hover:right-0 group-hover:w-full group-hover:h-full group-hover:rounded-[15px]"></span>
         </motion.button>
       </motion.div>
     </section>
   );
-}
+};
+
+export default BookingSteps;
